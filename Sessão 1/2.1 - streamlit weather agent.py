@@ -18,7 +18,7 @@ from langchain_core.tools import tool
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain.agents import create_agent
 from langchain_core.messages import AIMessage
-from langchain_oci.chat_models import ChatOCIGenAI
+
 
 
 # =========================
@@ -44,11 +44,11 @@ def get_weather(latitude: str, longitude: str) -> str:
 class CleanAgentCallback(BaseCallbackHandler):
 
     def on_tool_start(self, serialized, input_str, **kwargs):
-        print(f"\n🔧 TOOL: {serialized.get('name')}")
+        print(f"\n TOOL: {serialized.get('name')}")
         print(f"↳ input: {input_str}")
 
     def on_tool_end(self, output, **kwargs):
-        print("\n📡 TOOL RESULT:")
+        print("\n TOOL RESULT:")
 
         content = getattr(output, "content", output)
 
@@ -64,18 +64,24 @@ class CleanAgentCallback(BaseCallbackHandler):
 # =========================
 # LLM OCI
 # =========================
-llm = ChatOCIGenAI(
-    model_id="xai.grok-4-fast-non-reasoning",
-    service_endpoint="https://inference.generativeai.us-chicago-1.oci.oraclecloud.com",
-    compartment_id="ocid1.compartment.oc1..aaaaaaaa3x7n7wwfnghe4imvt3niwo76wgqv6ecn2iadiwoph73jjowbhbna",
-    provider="meta",
-    model_kwargs={
-        "temperature": 0.3,
-    },
-    auth_type="API_KEY",
-    auth_profile="CHICAGOV2"
-)
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+base_url = "https://inference.generativeai.us-chicago-1.oci.oraclecloud.com/20231130/actions/v1"  # ou sua URL
+api_key = os.getenv("OCI_API_KEY")
+
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(
+    model="xai.grok-4-fast-non-reasoning",
+    temperature=0.2,
+    max_tokens=500,
+    streaming=False,
+    api_key=api_key,
+    base_url=base_url
+)
 tools = [get_weather]
 
 
@@ -94,18 +100,6 @@ IMPORTANT:
 - Answer in the same language as the user question
 
 {tools}
-
-
-
-Format:
-
-Question:
-Thought:
-Action:
-Action Input:
-Observation:
-Thought:
-Final Answer:
 
 Begin!
 """
