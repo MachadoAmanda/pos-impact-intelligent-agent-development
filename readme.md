@@ -9,13 +9,13 @@ A proposta é simples: ensinar você a construir agentes que funcionam no mundo 
 ## Como a disciplina está organizada
 
 O conteúdo está dividido em 3 sessões e o repositório segue exatamente essa estrutura:
-
+```
 .
 ├── Sessão 1 - fundamentos de agentes/
 ├── Sessão 2 - tools memoria multiagentes/
 ├── Sessão 3 - producao e escala/
 └── README.md
-
+```
 ## 1. Fundamentos de Agentes
 
 Antes de usar tools, frameworks ou qualquer coisa sofisticada, precisamos entender:
