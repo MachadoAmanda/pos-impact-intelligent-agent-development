@@ -1,1 +1,0 @@
-# Sessão 3 - Produção e escala
