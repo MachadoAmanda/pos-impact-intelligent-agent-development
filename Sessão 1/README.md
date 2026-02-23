@@ -1,4 +1,4 @@
-# Guia -- LangChain + LangGraph 
+# Guia LangChain & LangGraph 
 
 Este repositório utiliza:
 
