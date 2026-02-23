@@ -1,3 +1,22 @@
+# Orientações para prática de n8n
+
+Para a prática de n8n você precisa ter o Node.js versão 20.20.0 instalado na sua máquina, para fazer o download basta acessar (https://nodejs.org/pt-br/download), escolher a versão e instalar. 
+
+![alt text](image.png)
+
+Verifique via cmd ou power shell se a versão está correta utilizando o comando `node --version`, se estiver correto deve parecer `v20.20.0`. 
+
+Depois rode:
+- `npm install -g n8n` para instalar
+- `n8n start` para rodar
+
+O terminal deve se manter aberto durante toda a prática, ele que está executando a interface do n8n. 
+
+**Complementar:** Caso você queira fazer isso em um servidor, nesse link (https://github.com/MachadoAmanda/example-codes-oci/blob/main/Guia%20de%20como%20instalar%20n8n%20(Windows%20e%20Ubuntu)%20e%20habilitar%20OCI%20no%20seu%20workflow.pdf) tem um guia de como subir um servidor linux ou windows na OCI para rodar o n8n e manter seus agentes ativos. Esse não é um passo obrigatíorio e você pode fazer em servidor próprio ou usando qualquer outro cloud provider da sua preferência. 
+
+
+-------------------------------------------------------------
+
 # Guia LangChain & LangGraph 
 
 Este repositório utiliza:
@@ -8,14 +27,12 @@ Este repositório utiliza:
 Este documento é um guia técnico dos principais elementos dessas
 bibliotecas para apoiar as aulas.
 
-------------------------------------------------------------------------
 
 # LangChain 1.1.0
 
 LangChain é uma camada de orquestração sobre modelos de linguagem. Ele
 organiza chamadas ao modelo, tool calling e agentes.
 
-------------------------------------------------------------------------
 
 ## Declaração da LLM
 
@@ -43,7 +60,7 @@ llm = ChatOpenAI(
 -   Quando você chama `.invoke()`, ele formata a mensagem.
 -   Envia e retorna no formato padronizado de mensagem.
 
-------------------------------------------------------------------------
+
 
 ## Criando Tools
 
@@ -65,7 +82,6 @@ def soma(a: int, b: int) -> int:
 -   LangChain executa a função real.
 -   O resultado retorna ao modelo.
 
-------------------------------------------------------------------------
 
 ## Criando um Agent com create_agent
 
@@ -104,7 +120,7 @@ print(response)
 
 Esse processo segue o padrão ReAct internamente.
 
-------------------------------------------------------------------------
+
 
 # LangGraph 0.2.x
 
@@ -116,7 +132,6 @@ LangGraph é usado quando precisamos de:
 
 Ele funciona como um grafo de estados.
 
-------------------------------------------------------------------------
 
 ## Definindo o estado
 
@@ -132,7 +147,7 @@ class AgentState(TypedDict):
 O estado é um dicionário tipado. Ele representa os dados que circulam no
 grafo.
 
-------------------------------------------------------------------------
+
 
 ## Criando os nós
 
@@ -150,7 +165,6 @@ Cada nó:
 -   Recebe o estado atual
 -   Retorna um dicionário com alterações
 
-------------------------------------------------------------------------
 
 ## Construindo o Grafo
 
@@ -175,7 +189,6 @@ app = graph.compile()
 -   `add_edge` define transições.
 -   `compile()` transforma o grafo em executável.
 
-------------------------------------------------------------------------
 
 ## Executando o Grafo
 
@@ -197,7 +210,6 @@ O motor do LangGraph:
 4.  Segue para o próximo node.
 5.  Até encontrar o `END`.
 
-------------------------------------------------------------------------
 
 ## Exemplo de condição
 
@@ -218,7 +230,6 @@ graph.add_conditional_edges(
     }
 )
 ```
-
 
 # Versões Utilizadas
 

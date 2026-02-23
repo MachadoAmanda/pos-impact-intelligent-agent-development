@@ -68,7 +68,7 @@ Evite pular direto para produção sem entender fundamentos.
 
 Como já visto em classe, os agentes são dependentes das LLMs, para isso você precisa configurar a sua, você pode usar qualquer uma, mas eu recomendo que seja OpenAI compatible para que você não tenha que adaptar tanto o código. 
 
-Uma dica para não ter nenhum custo com LLMs é fazer uma conta trial na OCI (https://signup.oraclecloud.com/), você vai ganhar 300USD de crédito para usar com qualquer modelo disponível. Lembrando que isso é opcional, você também pode optar por fazer uma conta na OpenAI que vai funcionar igual. 
+**Complementar:** Uma dica para não ter nenhum custo com LLMs é fazer uma conta trial na OCI (https://signup.oraclecloud.com/), você vai ganhar 300USD de crédito para usar com qualquer modelo disponível. Lembrando que isso é opcional, você também pode optar por fazer uma conta na OpenAI que vai funcionar igual. 
 
 O importante é configurar o arquivo `.env` com as suas credenciais. 
 
