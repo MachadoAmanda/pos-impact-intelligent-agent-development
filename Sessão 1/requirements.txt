@@ -1,6 +1,0 @@
-langchain-core
-langchain==1.1.0
-langchain-openai==1.1.10
-requests
-streamlit  
-python-dotenv
