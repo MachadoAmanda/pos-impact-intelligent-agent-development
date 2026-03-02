@@ -1,0 +1,220 @@
+MANUAL DE PROTOCOLOS DE ATENDIMENTO
+VERSÃO 2.0
+
+============================================================
+PROTOCOLO 001 – FALHA NO LOGIN COM 2FA
+============================================================
+
+Descrição:
+Usuário não consegue concluir login devido a erro no código de autenticação em dois fatores.
+
+Possíveis causas:
+- Código expirado
+- Horário do celular desincronizado
+- Aplicativo autenticador incorreto
+
+Procedimento:
+1. Verificar se o horário do celular está configurado automaticamente.
+2. Gerar um novo código no aplicativo autenticador.
+3. Evitar reutilizar códigos anteriores.
+4. Caso o erro persista, solicitar redefinição do 2FA via suporte.
+5. Após redefinição, configurar novamente o aplicativo autenticador.
+
+Prazo estimado: até 30 minutos.
+
+
+============================================================
+PROTOCOLO 002 – CONTA BLOQUEADA POR TENTATIVAS INVÁLIDAS
+============================================================
+
+Descrição:
+Conta bloqueada após múltiplas tentativas incorretas de login.
+
+Possíveis causas:
+- Senha incorreta
+- Tentativa automatizada
+- E-mail digitado incorretamente
+
+Procedimento:
+1. Aguardar 15 minutos antes de tentar novamente.
+2. Caso permaneça bloqueado, abrir chamado interno.
+3. Confirmar dados cadastrais para validação.
+4. Após desbloqueio, redefinir senha.
+5. Confirmar login bem-sucedido.
+
+Prazo estimado: até 1 hora.
+
+
+============================================================
+PROTOCOLO 003 – ERRO NA EMISSÃO DE NOTA FISCAL
+============================================================
+
+Descrição:
+Mensagem de erro ao tentar emitir documento fiscal.
+
+Possíveis causas:
+- Certificado digital vencido
+- Token desconectado
+- Instabilidade no órgão fiscal
+
+Procedimento:
+1. Verificar validade do certificado digital.
+2. Reconectar token físico.
+3. Reiniciar navegador.
+4. Testar emissão novamente.
+5. Caso continue, enviar print do erro ao suporte.
+
+Prazo estimado: até 4 horas.
+
+
+============================================================
+PROTOCOLO 004 – ESTOQUE NEGATIVO
+============================================================
+
+Descrição:
+Produto aparece com saldo negativo no sistema.
+
+Possíveis causas:
+- Venda registrada antes da entrada
+- Ajuste manual incorreto
+
+Procedimento:
+1. Acessar histórico de movimentações.
+2. Verificar ordem cronológica dos lançamentos.
+3. Identificar inconsistência.
+4. Corrigir lançamento incorreto.
+5. Reprocessar saldo do item.
+
+Prazo estimado: até 2 horas.
+
+
+============================================================
+PROTOCOLO 005 – LENTIDÃO NO SISTEMA
+============================================================
+
+Descrição:
+Sistema apresenta lentidão generalizada.
+
+Possíveis causas:
+- Conexão instável
+- Alto volume de acessos
+- Cache acumulado no navegador
+
+Procedimento:
+1. Testar velocidade da internet.
+2. Limpar cache e cookies.
+3. Acessar em aba anônima.
+4. Testar em outro navegador.
+5. Registrar horário exato do ocorrido.
+
+Prazo estimado: até 4 horas.
+
+
+============================================================
+PROTOCOLO 006 – RELATÓRIO NÃO GERA
+============================================================
+
+Descrição:
+Relatório solicitado não é gerado ou retorna em branco.
+
+Possíveis causas:
+- Filtros incorretos
+- Período sem dados
+- Timeout de processamento
+
+Procedimento:
+1. Conferir filtros aplicados.
+2. Reduzir intervalo de datas.
+3. Gerar relatório em formato alternativo.
+4. Aguardar conclusão do processamento.
+5. Caso persista, registrar chamado com parâmetros utilizados.
+
+Prazo estimado: até 24 horas.
+
+
+============================================================
+PROTOCOLO 007 – ERRO AO SALVAR CADASTRO
+============================================================
+
+Descrição:
+Mensagem de erro ao salvar cadastro de cliente ou produto.
+
+Possíveis causas:
+- Campo obrigatório não preenchido
+- Formato inválido de dados
+- Registro duplicado
+
+Procedimento:
+1. Verificar campos obrigatórios destacados.
+2. Conferir formato de e-mail e CNPJ.
+3. Confirmar se registro já existe.
+4. Corrigir dados e tentar novamente.
+5. Se persistir, enviar print completo da tela.
+
+Prazo estimado: até 4 horas.
+
+
+============================================================
+PROTOCOLO 008 – FALHA NA INTEGRAÇÃO EXTERNA
+============================================================
+
+Descrição:
+Integração externa não está sincronizando dados.
+
+Possíveis causas:
+- Token expirado
+- Alteração na API do parceiro
+- Limite de requisição excedido
+
+Procedimento:
+1. Verificar status da integração no painel.
+2. Atualizar token de autenticação.
+3. Testar conexão manual.
+4. Confirmar dados de acesso.
+5. Registrar erro completo no chamado.
+
+Prazo estimado: até 8 horas.
+
+
+============================================================
+PROTOCOLO 009 – E-MAIL AUTOMÁTICO NÃO RECEBIDO
+============================================================
+
+Descrição:
+Usuário não recebeu e-mail automático do sistema.
+
+Possíveis causas:
+- Caixa de spam
+- E-mail incorreto cadastrado
+- Bloqueio pelo servidor de e-mail
+
+Procedimento:
+1. Verificar pasta de spam.
+2. Confirmar e-mail cadastrado.
+3. Solicitar reenvio.
+4. Adicionar domínio à lista segura.
+5. Caso continue, registrar chamado.
+
+Prazo estimado: até 2 horas.
+
+
+============================================================
+PROTOCOLO 010 – ERRO APÓS ATUALIZAÇÃO DE VERSÃO
+============================================================
+
+Descrição:
+Funcionalidade apresenta comportamento inesperado após atualização.
+
+Possíveis causas:
+- Cache antigo
+- Incompatibilidade temporária
+- Ajuste de configuração pendente
+
+Procedimento:
+1. Limpar cache do navegador.
+2. Fazer logout e login novamente.
+3. Confirmar nova versão exibida no rodapé.
+4. Testar funcionalidade novamente.
+5. Reportar inconsistência detalhada.
+
+Prazo estimado: até 24 horas.
