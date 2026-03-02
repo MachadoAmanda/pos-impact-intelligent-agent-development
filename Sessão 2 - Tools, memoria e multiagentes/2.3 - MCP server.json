@@ -1,0 +1,82 @@
+{
+  "name": "2.3 MCP server",
+  "nodes": [
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Execute a SQL query in Postgres. \n\nSchema:\n    Tabela tickets:\n    - id (integer)\n    - cliente (text)\n    - prioridade (text: P1, P2, P3, P4)\n    - modulo (text)\n    - status (text)\n    - data_abertura (timestamp)\n    - resolvido (boolean)",
+        "operation": "executeQuery",
+        "query": "{{ $fromAI('Query_Parameters', `SQL executável no postgress `, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        160,
+        224
+      ],
+      "id": "1b78cdad-858d-4da2-abf1-000c5fd3f5ba",
+      "name": "Execute a SQL query in Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "mrDEvyFwIcAsCsuU",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## MCP Server - NL2SQL",
+        "height": 480,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "2cd57f76-03cb-4c41-a132-89348bb7b941",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "path": "d0bb3872-ed7d-467e-910e-f35c6c6711aa"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2abbb889-d7f1-4125-abe8-4442c57092a0",
+      "name": "MCP Server trigger",
+      "webhookId": "d0bb3872-ed7d-467e-910e-f35c6c6711aa"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute a SQL query in Postgres": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "54c6c34e-0845-49be-9276-22c164eaae16",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f1232583dc4b884a82d8bd318ad6ed9e120328785379976bfd5db7948204249"
+  },
+  "id": "lCbA9PmSgY0txK5t",
+  "tags": []
+}

@@ -1,0 +1,142 @@
+{
+  "name": "2.4 Agent MCP",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ed606809-5ce4-4218-a1f0-5533d6cd734e",
+      "name": "When chat message received",
+      "webhookId": "8396bb9a-f936-4af1-b3c0-4b44a28d6906"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Você é um assistente de dados que tem uma ferramenta de MCP que executa queries no banco Postgress. Seu usuário não sabe sobre bancos, ele é uma pessoa de negócio que precisa de informações, nunca fale de queries ou informações internas.\n\nSeus dados são sobre histórico de tickets.\n\nImportante:\n- Não responda perguntas que estão fora desse contexto\n- Não invente dados, responda apenas sobre os dados que foram gerados na consulta\n- Você pode ir mais de uma vez na tool se for necessário\n- Sempre busque no banco para confirmar informações do contexto\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "211d1d55-09db-4f74-865e-dbe6a6ba6c6f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "=xai.grok-4-fast-non-reasoning",
+          "mode": "id"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        208
+      ],
+      "id": "db689d95-ff90-45fa-910f-bbb6c767365d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "nWkMP8rkI5EAVHC6",
+          "name": "OCI Openai credential"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "1dd74ed7-82b9-4c31-a6a8-6e642bbd1f44",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://163.176.239.157:5678/mcp/26211ae1-d106-4b78-b3b8-d0667a5821c7",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        224
+      ],
+      "id": "70f59b8a-35ce-491c-b7fc-58a1ed6d2b63",
+      "name": "MCP Client -> n8n Server"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client -> n8n Server": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "da79ee2f-8695-4924-ae1f-e894cfbcb974",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f1232583dc4b884a82d8bd318ad6ed9e120328785379976bfd5db7948204249"
+  },
+  "id": "U0qvQCJu5k5BuxGt",
+  "tags": []
+}

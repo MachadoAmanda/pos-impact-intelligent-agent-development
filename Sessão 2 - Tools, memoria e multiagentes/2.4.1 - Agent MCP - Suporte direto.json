@@ -1,0 +1,146 @@
+{
+  "name": "2.4.1 Agent MCP - Suporte direto",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d080d2fe-ec7f-4735-ab69-03ba8298caa6",
+      "name": "When chat message received",
+      "webhookId": "e59408db-337a-4295-9abe-8b1b334700df"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Você é um assistente de suporte, seu objetivo é ajudar o usuário e resolver seu problema utilizando a base de conhecimento que você tem acesso. \n\nRegras:\n- Não responda informações que não estão na base de contexto\n- Não responda quando a pergunta não está dentro do seu escopo definido\n- Você só pode usar as informações retornadas pela tool \n- Faça quantas buscar forem necessárias\n\nCaso não encontrar a melhor orientação na resposta da tool, você deve informar ao usuário que ainda não tem essa resposta e falar que está em constante evolução."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "bb1cbd50-7457-447b-8467-748507fc2735",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "=xai.grok-4-fast-non-reasoning",
+          "mode": "id"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        208
+      ],
+      "id": "d2c03719-a22d-4c3f-8b96-860275156c8d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "nWkMP8rkI5EAVHC6",
+          "name": "OCI Openai credential"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "c31df75a-fa79-4e1e-9391-e835b6ffb0e5",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://163.176.239.157:5678/mcp/26211ae1-d106-4b78-b3b8-d0667a5821c7",
+        "include": "selected",
+        "includeTools": [
+          "Postgres_PGVector_Store"
+        ],
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        224
+      ],
+      "id": "07cf1081-b68d-43ef-bbbf-2bfd5217fd8c",
+      "name": "MCP Client -> n8n Server"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client -> n8n Server": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "cccedd11-ae88-40c7-8547-695f60815d6b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f1232583dc4b884a82d8bd318ad6ed9e120328785379976bfd5db7948204249"
+  },
+  "id": "2I4I1jLoRWPbubWq",
+  "tags": []
+}

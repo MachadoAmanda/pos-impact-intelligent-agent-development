@@ -1,0 +1,229 @@
+{
+  "name": "2.5 MCP server (RAG + NL2SQL + HTTPS)",
+  "nodes": [
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Execute a SQL query in Postgres. \n\nSchema:\n    Tabela tickets:\n    - id (integer)\n    - cliente (text)\n    - prioridade (text: P1, P2, P3, P4)\n    - modulo (text)\n    - status (text)\n    - data_abertura (timestamp)\n    - resolvido (boolean)",
+        "operation": "executeQuery",
+        "query": "{{ $fromAI('Query_Parameters', `SQL executável no postgress `, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        224,
+        224
+      ],
+      "id": "d4f5c34e-552e-41f3-b99a-692d21122d89",
+      "name": "Execute a SQL query in Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "mrDEvyFwIcAsCsuU",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## MCP Server - NL2SQL",
+        "height": 208,
+        "width": 496
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "1226a222-3bbf-4ff4-b3ea-6c5dd56b34f6",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## MCP Server - RAG",
+        "height": 352,
+        "width": 608,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        432,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "e2479a60-9d84-45cb-bea1-8bd7b7d17dd2",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Busca de informações sobre a empresa ou sobre protocolos de tickets, caso chegue uma duvida de como resolver algum ticket, essa informação pode estar aqui nos protocolos de resolução.",
+        "tableName": "documentos",
+        "options": {
+          "distanceStrategy": "cosine",
+          "columnNames": {
+            "values": {
+              "contentColumnName": "conteudo",
+              "metadataColumnName": "titulo"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        224
+      ],
+      "id": "7ab209a4-66b0-4a3c-8312-36d4ab099cb0",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "mrDEvyFwIcAsCsuU",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        384
+      ],
+      "id": "6bc8a2af-33a0-4c0a-a3bc-6bc271ba869f",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "2r4KPcIs8yShVnEG",
+          "name": "OpenAI credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "347e29e3-633a-4dc7-9a20-55c89a1bd089"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f558f270-cded-4e25-83b7-7311586b12ca",
+      "name": "MCP Server trigger",
+      "webhookId": "347e29e3-633a-4dc7-9a20-55c89a1bd089"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Gera uma notificação e abre uma issue para alegar necessidade de atualização da documentação. A descrição e detlahes da issua são enviadas por e-mail ao analista que vai resolver essa issue. ",
+        "method": "POST",
+        "url": "http://163.176.239.157:8000/notify-update",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Titulo deve ser direto e claro. Não use mais que 10 palavras.`, 'string') }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', `Descrição completa da issue. Considerar enviar relatos da conversa e da necessidade aqui.`, 'string') }}"
+            },
+            {
+              "name": "priority",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `Um dos valores: Low, Medium ou High`, 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        640,
+        -32
+      ],
+      "id": "d5c85955-8d00-40f0-9d60-cbb74006b748",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "content": "## MCP Server - HTTP",
+        "height": 208,
+        "width": 368,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        432,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "5160c99c-fb31-4cde-a416-b4d3645dad30",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute a SQL query in Postgres": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "97832a78-2172-43c3-9d36-7f66b5b30da9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f1232583dc4b884a82d8bd318ad6ed9e120328785379976bfd5db7948204249"
+  },
+  "id": "WqE7d1fUdZcTLL66",
+  "tags": []
+}

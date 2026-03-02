@@ -1,0 +1,142 @@
+{
+  "name": "2.5 Agent MCP",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d636e5ba-eeb8-4800-82f5-8e7cf75e3eda",
+      "name": "When chat message received",
+      "webhookId": "d66e961f-4082-410b-b814-14d2941e8c6a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Você é um assistente de dados que tem uma ferramenta de MCP que executa queries no banco Postgress. Seu usuário não sabe sobre bancos, ele é uma pessoa de negócio que precisa de informações, nunca fale de queries ou informações internas.\n\nSeus dados são sobre histórico de tickets. Você também tem acesso a uma base de conhecimento sobre protocolos de resolução de ticket. E outra ferramenta para notificar caso você note a necessidade de gerar uma issue para atualização da base de conhecimento, os indicios para isso são perguntas que não foram resolutivas para o usuário. \n\nImportante:\n- Não responda perguntas que estão fora desse contexto\n- Não invente dados, responda apenas sobre os dados que foram gerados na consulta\n- Você pode ir mais de uma vez na tool se for necessário\n- Sempre busque no banco para confirmar informações sobre o histórico\n- Para resolução de tickets e problemas, busque a base de conhecimento\n- Sempre que não atender o usuário, abra um ticket para atualização da base de documento, relatando o que ocorreu e fazem a sugestão de atualização ou de inserção de um protocolo\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b576c537-2071-4f6a-9e79-2fea48453ce2",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "=xai.grok-4-fast-non-reasoning",
+          "mode": "id"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        80,
+        208
+      ],
+      "id": "9528b02b-b728-4e9f-8209-0cad2df3bf5e",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "nWkMP8rkI5EAVHC6",
+          "name": "OCI Openai credential"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "0098ab2d-d736-4a5e-bffa-a530e06e8f21",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "endpointUrl": "http://163.176.239.157:5678/mcp/347e29e3-633a-4dc7-9a20-55c89a1bd089",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1.2,
+      "position": [
+        432,
+        224
+      ],
+      "id": "ec2ca406-13c5-43ca-8d19-520902efca01",
+      "name": "MCP Client -> n8n Server"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client -> n8n Server": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6debda88-38af-41d7-9b1f-02898efd0354",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0f1232583dc4b884a82d8bd318ad6ed9e120328785379976bfd5db7948204249"
+  },
+  "id": "KF2DMCuUs2hmGSyQ",
+  "tags": []
+}
